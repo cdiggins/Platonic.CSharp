@@ -34,6 +34,15 @@ The other challenge with C# is that there is a split in terms of what language f
 where. Many popular plug-in APIs (including Unity and Visual Studio) require using older versions 
 of the language which have fewer features.   
 
+# Uniqueness Typing for Controlled Mutability
+
+The key idea of Platonic C# is to restrict mutable data types so that they have at most one reference at any time.
+This idea is known as a [unique type](https://en.wikipedia.org/wiki/Uniqueness_type) which is a restricted form 
+of [linear type](https://en.wikipedia.org/wiki/Substructural_type_system#Linear_type_systems).
+
+This allows functions to retain [referential transparency](https://en.wikipedia.org/wiki/Referential_transparency) 
+even when using mutable types. 
+
 # The Rules
 
 ## Language Rules
@@ -49,13 +58,18 @@ of the language which have fewer features.
 
 ## Mutability and External Libraries
 
-1. Mutable types must be annotated with a `[Mutable]` attribute. The precise type and origin of the MutableAttribute does not matter, you can define it locally if not imported from another class. Analyzers and other tools will look for any attribute with the name `MutableAttribute`.  
-1. Only classes can be declaraed as mutable 
+1. Mutable types must be annotated with a `[Mutable]` attribute. 
+1. Only classes can be declared as mutable 
 1. Mutable data types cannot be captured in a lambda or a delegate 
 1. Classes and interfaces imported from other libraries (including System) are assumed to be mutable data types, except for `System.String`
 1. Arrays are considered a mutable data types
 1. Structs imported from other libraries are treated as immutable
-1. A mutable type can only be used in one place at a time. It cannot be assigned to different variables, fields, or formal arguments 
+1. A mutable type can only be used in one place at a time. It cannot be assigned to different variables, fields, or formal arguments.
+
+ 
+# Implementation Details
+
+* The precise type and origin of the MutableAttribute does not matter, you can define it locally if not imported from another class. Analyzers and other tools will look for any attribute with the name `MutableAttribute`.  
  
 # Birth of Plato 
 
