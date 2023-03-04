@@ -34,6 +34,29 @@ The other challenge with C# is that there is a split in terms of what language f
 where. Many popular plug-in APIs (including Unity and Visual Studio) require using older versions 
 of the language which have fewer features.   
 
+# The Rules
+
+## Language Rules
+
+1. Only C# 7.3 and .NET Standard 2.0 is supported  
+1. No unsafe code is allowed 
+
+## Immutability by Default
+
+1. All data types (classes, structs, and interfaces) are immutable by default 
+1. An immutable data type does not allow any property setters or changing of fields from any internal method or external code  
+1. Immutable data types cannot have fields or properties that are mutable data types
+
+## Mutability and External Libraries
+
+1. Mutable types must be annotated with a `[Mutable]` attribute. The precise type and origin of the MutableAttribute does not matter, you can define it locally if not imported from another class. Analyzers and other tools will look for any attribute with the name `MutableAttribute`.  
+1. Only classes can be declaraed as mutable 
+1. Mutable data types cannot be captured in a lambda or a delegate 
+1. Classes and interfaces imported from other libraries (including System) are assumed to be mutable data types, except for `System.String`
+1. Arrays are considered a mutable data types
+1. Structs imported from other libraries are treated as immutable
+1. A mutable type can only be used in one place at a time. It cannot be assigned to different variables, fields, or formal arguments 
+ 
 # Birth of Plato 
 
 Platonic C# came from the idea of embedding a new language in C# that was pure functional and 
