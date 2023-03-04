@@ -1,12 +1,13 @@
 # Platonic.CSharp
 
-<img src="https://repository-images.githubusercontent.com/609569257/2054044d-7e68-4a86-9382-38a165b92280" width="512" height="355"></img>
-
-[Image by Johnson Cameraface](https://www.flickr.com/photos/54459164@N00/4184437649) licensed usage under CC BY-NC-SA 2.0
 
 **Platonic C#** is a set of style and coding guidelines for cross-platform C#
 that encourage the usage of functional programming, referential transparency,
 and immutable data structures. 
+
+![platonic_solids_1024x400](https://user-images.githubusercontent.com/1759994/222923632-e2d85788-47e5-402a-8a2b-753fed88030d.jpg)
+
+[Image by Johnson Cameraface](https://www.flickr.com/photos/54459164@N00/4184437649) licensed usage under CC BY-NC-SA 2.0
 
 The purpose of these rules are to:
 1. Make it easier for tools to analyze, transform, translate, and optimize C# code
