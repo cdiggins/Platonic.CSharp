@@ -62,12 +62,12 @@ even when using mutable types.
 ## Methods 
 
 * Methods are either 
-	* [Pure] - meaning it has no side effects
-	* [ImpureWrite] - writes to one of the fields 
-	* [ImpureEffect] - uses a mutable type 
-* Only mutable types may have [ImpureWrite] functions
-* Both mutable and immutable types may have [ImpureEffect] functions 
-* No `async` methods are supported 
+	* `[Pure]` - meaning it has no side effects
+	* `[ImpureWrite]` - writes to one of the fields 
+	* `[ImpureEffect]` - uses a mutable type 
+* Only `[Mutable]` types may have `[ImpureWrite]` functions
+* Both `[Mutable]` and `[Immutable]` types may have `[ImpureEffect]` functions 
+* No `async` methods 
 
 ## Additional Rules
 
@@ -116,4 +116,4 @@ of the language which have fewer features.
 * A Roslyn code analyzer that enforces the Platonic code style 
 * An optimizer that converts Platonic C# into efficient byte code
 * A Platonic C# => Plato translator 
-
+S
