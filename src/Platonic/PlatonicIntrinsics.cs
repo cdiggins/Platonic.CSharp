@@ -1,7 +1,6 @@
 ﻿namespace PlatonicIntrinsics
 {
     public class MutatesAttribute : Attribute { }
-    public class ReadOnlyAttribute : Attribute { }
     public class MutableAttribute : Attribute { }
     public class ImmutableAttribute : Attribute { }
     public class SideEffectAttribute : Attribute { }
@@ -42,13 +41,13 @@
         void MoveNext();
     }
 
-    [ReadOnly]
+    [Immutable]
     public interface IEnumerable<T>
     {
         public IEnumerator<T> GetEnumerator();
     }
 
-    [ReadOnly]
+    [Immutable]
     public interface IReadOnlyList<T>
     {
         T[] Data { get; }
@@ -83,7 +82,6 @@
         public int Count => Data.Length;
         public T this[int index] => Data[index];
 
-        [Mutable]
         public void Set(int index, T value)
         {
             Data[index] = value;
