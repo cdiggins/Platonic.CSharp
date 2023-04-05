@@ -3,8 +3,8 @@
     public class MutableAttribute : Attribute { }
     public class ImmutableAttribute : Attribute { }
 
-    public class UpdateSelfAttribute : Attribute { }
-    public class UpdateArgAttribute : Attribute { }
+    public class ImpureWrite : Attribute { }
+    public class ImpureEffectAttribute : Attribute { }
     
     [Immutable]
     public interface IObject
@@ -38,7 +38,7 @@
     {
         T Current { get; }
 
-        [UpdateSelf]
+        [ImpureWrite]
         void MoveNext();
     }
 
@@ -58,7 +58,7 @@
 
     public static class Extensions
     {
-        [UpdateArg]
+        [ImpureEffect]
         public static void CopyTo<T>(this IReadOnlyList<T> self, IMutableArray<T> xs, int srcOffset, int destOffset, int count)
         {
             for (var i = 0; i < count; i++)
@@ -97,7 +97,7 @@
     [Mutable]
     public interface IList<T>
     {
-        [UpdateSelf]
+        [ImpureWrite]
         void Add(T item);
     }
 
@@ -107,7 +107,7 @@
         public IMutableArray<T> Array { get; private set; }
         public int Count { get; private set; }
         
-        [UpdateSelf]
+        [ImpureWrite]
         public void Add(T item)
         {
             Count += 1;
