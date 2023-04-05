@@ -1,9 +1,10 @@
 ﻿namespace PlatonicIntrinsics
 {
-    public class MutatesAttribute : Attribute { }
     public class MutableAttribute : Attribute { }
     public class ImmutableAttribute : Attribute { }
-    public class SideEffectAttribute : Attribute { }
+
+    public class UpdateSelfAttribute : Attribute { }
+    public class UpdateArgAttribute : Attribute { }
     
     [Immutable]
     public interface IObject
@@ -37,7 +38,7 @@
     {
         T Current { get; }
 
-        [Mutates]
+        [UpdateSelf]
         void MoveNext();
     }
 
@@ -57,7 +58,7 @@
 
     public static class Extensions
     {
-        [SideEffect]
+        [UpdateArg]
         public static void CopyTo<T>(this IReadOnlyList<T> self, IMutableArray<T> xs, int srcOffset, int destOffset, int count)
         {
             for (var i = 0; i < count; i++)
@@ -96,7 +97,7 @@
     [Mutable]
     public interface IList<T>
     {
-        [Mutates]
+        [UpdateSelf]
         void Add(T item);
     }
 
@@ -106,7 +107,7 @@
         public IMutableArray<T> Array { get; private set; }
         public int Count { get; private set; }
         
-        [Mutates]
+        [UpdateSelf]
         public void Add(T item)
         {
             Count += 1;

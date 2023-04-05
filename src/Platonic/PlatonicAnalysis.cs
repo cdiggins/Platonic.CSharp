@@ -3,8 +3,56 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Operations;
 using Ptarmigan.Utils.Roslyn;
+using Compilation = Ptarmigan.Utils.Roslyn.Compilation;
 
 namespace Platonic;
+
+public class PlatonicFileAnalysis
+{
+    public List<PlatoTypeAnalysis> Types { get; } = new();
+
+    public SyntaxTree Tree { get; }
+    public SemanticModel Model { get; }
+    public string FileName => Tree.FilePath;
+
+    public PlatonicFileAnalysis(SyntaxTree tree, SemanticModel model)
+    {
+        Tree = tree;
+        Model = model;
+        Types = TypeDeclarations.Select(td => new PlatoTypeAnalysis(model, td)).ToList();
+    }
+
+    public IEnumerable<UsingDirectiveSyntax> UsingDirectives
+        => Tree.GetRoot().ChildNodes().OfType<UsingDirectiveSyntax>();
+
+    public IEnumerable<EnumDeclarationSyntax> EnumDeclarations
+        => Tree.GetRoot().DescendantNodesAndSelf().OfType<EnumDeclarationSyntax>();
+
+    public IEnumerable<TypeDeclarationSyntax> TypeDeclarations
+        => Tree.GetRoot().DescendantNodesAndSelf().OfType<TypeDeclarationSyntax>();
+}
+
+public class PlatonicProjectAnalysis
+{
+    public Dictionary<INamedTypeSymbol, PlatoTypeAnalysis> SymbolLookup =
+        new Dictionary<INamedTypeSymbol, PlatoTypeAnalysis>(SymbolEqualityComparer.Default);
+
+    public List<PlatonicFileAnalysis> Files { get; } = new(); 
+    public Compilation Compilation { get; }
+
+    public PlatonicProjectAnalysis(Compilation compilation)
+    {
+        Compilation = compilation;
+        foreach (var st in compilation.SyntaxTrees)
+        {
+            Files.Add(new PlatonicFileAnalysis(st, compilation.Compiler.GetSemanticModel(st)));
+        }
+
+        foreach (var f in Files)
+        foreach (var t in f.Types)
+            SymbolLookup.Add(t.TypeSymbol, t);
+    }
+}
 
 public abstract class PlatonicAnalysisContext
 {
