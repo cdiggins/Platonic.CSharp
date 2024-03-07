@@ -1,4 +1,4 @@
-** NOTE: this library has been archived and is superceded by the [Plato language](https://github.com/cdiggins/plato) **
+**NOTE: this library has been archived and is superceded by the [Plato language](https://github.com/cdiggins/plato)**
 
 # Platonic.CSharp
 
