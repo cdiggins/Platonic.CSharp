@@ -1,3 +1,5 @@
+** NOTE: this library has been archived and is superceded by the [Plato language](https://github.com/cdiggins/plato) **
+
 # Platonic.CSharp
 
 **Platonic C#** is a set of style and coding guidelines for cross-platform C#
